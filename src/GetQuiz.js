@@ -1,31 +1,35 @@
-import {useState, useEffect} from 'react'
-import {collection, query, onSnapshot} from "firebase/firestore"
-import {db} from './firebase'
+import {useState, useEffect} from 'react';
+import {collection, query, onSnapshot} from "firebase/firestore";
+import {db} from './firebase';
+import Question from './Question';
 
 export default function Choices() {
-    const [quiz, setQuiz] = useState([])
+    const [quiz, setQuiz] = useState([]);
 
     useEffect(() => {
-        const q = query(collection(db, 'quizzes'))
+        const q = query(collection(db, 'quizzes'));
         onSnapshot(q, (querySnapshot) => {
-          setQuiz(querySnapshot.docs.map(doc => ({
+            setQuiz(querySnapshot.docs.map(doc => ({
             id: doc.id,
             data: doc.data()
-          })))
-        })
-      },[])
-      
+            })));
+        });
+    },[])
+
+        const checkAnswer = (answer, correctAns) => {
+            if (answer == correctAns) {
+                console.log('Correct!');
+            }
+        }
 
     return (
-        <div>
-            {quiz.map(({data}) => (
-                <>
-                    <h1>{data.question}</h1>
-                    {!!data.choices && data.choices.map((choice)=>(
-                        <button>{choice}</button>
-                    ))}
-                </>
-            ))}
-        </div>
+        quiz.map(({data}) => (
+            <Question 
+                question={data.question} 
+                answer={data.correct}
+                choices={data.choices}
+                checkAnswer={checkAnswer}
+            />
+        ))
     )
 }
