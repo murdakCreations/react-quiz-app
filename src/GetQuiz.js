@@ -17,7 +17,7 @@ export default function Choices() {
     },[])
 
     const checkAnswer = (answer, correctAns) => {
-        if (answer == correctAns) {
+        if (answer === correctAns) {
             console.log('Correct!');
         }
         else {
