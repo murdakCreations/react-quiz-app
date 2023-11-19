@@ -1,5 +1,13 @@
-export default function Score() {
+export default function Score({score, outOf}) {
+    const refreshPage = () => {
+        window.location.reload();
+    }
+
     return (
-        <h1>This is where the total score will be rendered.</h1>
+        <>
+            <h3>Yey! Your Score is:</h3>
+            <h1>{score}/{outOf}</h1>
+            <button onClick={refreshPage}>Try Again</button>
+        </>
     )
 }

@@ -7,6 +7,7 @@ import Score from './Score';
 export default function Choices() {
     const [quiz, setQuiz] = useState([]);
     const [nextQ, setNextQ] = useState(0);
+    const [score, setScore] = useState(0);
 
     useEffect(() => {
         const q = query(collection(db, 'quizzes'));
@@ -20,6 +21,8 @@ export default function Choices() {
 
     const checkAnswer = (answer, correctAns) => {
         if (answer === correctAns) {
+            let point = score + 1;
+            setScore(point);
             console.log('Correct!');
         }
         else {
@@ -37,7 +40,7 @@ export default function Choices() {
                 choices={quiz[nextQ].data.choices}
                 checkAnswer={checkAnswer}
             />}
-            {!quiz[nextQ] && <Score />}
+            {!quiz[nextQ] && (nextQ > 0) && <Score score={score} outOf={quiz.length} />}
         </>
     )
 }
