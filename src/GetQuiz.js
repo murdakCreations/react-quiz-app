@@ -10,26 +10,29 @@ export default function Choices() {
         const q = query(collection(db, 'quizzes'));
         onSnapshot(q, (querySnapshot) => {
             setQuiz(querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            data: doc.data()
+                id: doc.id,
+                data: doc.data()
             })));
         });
     },[])
 
-        const checkAnswer = (answer, correctAns) => {
-            if (answer == correctAns) {
-                console.log('Correct!');
-            }
+    const checkAnswer = (answer, correctAns) => {
+        if (answer == correctAns) {
+            console.log('Correct!');
         }
+        else {
+            console.log('Incorrect!');
+        }
+    }
 
     return (
-        quiz.map(({data}) => (
-            <Question 
-                question={data.question} 
-                answer={data.correct}
-                choices={data.choices}
+        <>
+            {!!quiz[0] && <Question 
+                question={quiz[0].data.question} 
+                answer={quiz[0].data.correct}
+                choices={quiz[0].data.choices}
                 checkAnswer={checkAnswer}
-            />
-        ))
+            />}
+        </>
     )
 }
