@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import {collection, query, onSnapshot} from "firebase/firestore";
 import {db} from './firebase';
 import Question from './Question';
+import Score from './Score';
 
 export default function Choices() {
     const [quiz, setQuiz] = useState([]);
@@ -36,6 +37,7 @@ export default function Choices() {
                 choices={quiz[nextQ].data.choices}
                 checkAnswer={checkAnswer}
             />}
+            {!quiz[nextQ] && <Score />}
         </>
     )
 }
