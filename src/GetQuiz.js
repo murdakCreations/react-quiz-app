@@ -5,6 +5,7 @@ import Question from './Question';
 
 export default function Choices() {
     const [quiz, setQuiz] = useState([]);
+    const [nextQ, setNextQ] = useState(0);
 
     useEffect(() => {
         const q = query(collection(db, 'quizzes'));
@@ -23,14 +24,16 @@ export default function Choices() {
         else {
             console.log('Incorrect!');
         }
+        let num = nextQ + 1;
+        setNextQ(num)
     }
 
     return (
         <>
-            {!!quiz[0] && <Question 
-                question={quiz[0].data.question} 
-                answer={quiz[0].data.correct}
-                choices={quiz[0].data.choices}
+            {!!quiz[nextQ] && <Question 
+                question={quiz[nextQ].data.question} 
+                answer={quiz[nextQ].data.correct}
+                choices={quiz[nextQ].data.choices}
                 checkAnswer={checkAnswer}
             />}
         </>
