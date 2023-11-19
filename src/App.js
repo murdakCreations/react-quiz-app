@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <button onClick={hideGetStartedBtn} id='start'>Get Started</button>
-      {nextPage == 'question' && <GetQuiz />}
+      {nextPage === 'question' && <GetQuiz />}
     </div>
   );
 }
